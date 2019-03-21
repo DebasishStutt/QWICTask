@@ -12,7 +12,7 @@ void updatePositionCoordinates();
 void moveInCurrentDirection(char direction);
 void deleteMap();
 void enterBreakerMode();
-//dummy
+
 
 
 static int breaker_mode = 0;
@@ -26,6 +26,12 @@ static int infiniteLoop;// abort_program;
     int r, c;
 }Automaton_pos;
 */
+
+/*	unified exception handling structure
+	All parts of the code that experiences
+	an exception/error writes the message
+	signals such a condition.
+*/
 struct abortHandler
 {
     int abortsignal;
@@ -36,7 +42,7 @@ int main()
 {
     char x;
 
-    printf("Hello world!\n");
+    //printf("Hello world!\n");
 
     takeInput();
 
@@ -142,7 +148,7 @@ int main()
     }
 
 
-    //delete the map
+    //delete the map and free the memory
     deleteMap();
     return 0;
 }
@@ -194,6 +200,7 @@ void init()
     //maybe more init tasks would be required
 }
 
+//input map
 void takeInput()
 {
     int i;
@@ -219,8 +226,15 @@ void takeInput()
         fgets (map[i], (map_c+1), stdin);
         //line[c] = '\0';
         fflush(stdin);
+        //puts(map[i]);
+    }
+    printf("\nThe map looks like:\n");
+
+	for(i = 0; i < map_r; i++)
+    {
         puts(map[i]);
     }
+    fflush(stdout);
 }
 
 char getNextCellValue(char direction)
