@@ -1,7 +1,6 @@
 # QWICTask
 Solution to the task by QWIC
-------------------------------------------------------------------------------------------------------------------------------------------
-
+----------------------------------------------------------------------------------------------------------------------------------------
 The Goal
 Automaton-LG is a our self driving robot bike. But unfortunately we lost him.
 
@@ -15,15 +14,16 @@ new intelligence with which Automaton-LG has been programmed as well as a map of
 Rules
 The 9 rules of the new Automaton-LG system:
 
-Automaton-LG starts from the place indicated by the @ symbol on the map and heads SOUTH.
-Automaton-LG finishes his journey and dies when he reaches the suicide booth marked $.
-Obstacles that Automaton-LG may encounter are represented by # or X.
-When Automaton-LG encounters an obstacle, he changes direction using the following priorities: SOUTH, EAST, NORTH and WEST. So he first tries to go SOUTH, if he cannot, then he will go EAST, if he still cannot, then he will go NORTH, and finally if he still cannot, then he will go WEST.
-Along the way, Automaton-LG may come across path modifiers that will instantaneously make him change direction. The S modifier will make him turn SOUTH from then on, E, to the EAST, N to the NORTH and W to the WEST.
-The circuit inverters (I on map) produce a magnetic field which will reverse the direction priorities that Automaton-LG should choose when encountering an obstacle. Priorities will become WEST, NORTH, EAST, SOUTH. If Automaton-LG returns to an inverter I, then priorities are reset to their original state (SOUTH, EAST, NORTH, WEST).
-Automaton-LG can also find a few beers along his path (B on the map) that will give him strength and put him in “Breaker” mode. Breaker mode allows Automaton-LG to destroy and automatically pass through the obstacles represented by the character X (only the obstacles X). When an obstacle is destroyed, it remains so permanently and Automaton-LG maintains his course of direction. If Automaton-LG is in Breaker mode and passes over a beer again, then he immediately goes out of Breaker mode. The beers remain in place after Automaton-LG has passed.
-2 teleporters T may be present in the city. If Automaton-LG passes over a teleporter, then he is automatically teleported to the position of the other teleporter and he retains his direction and Breaker mode properties.
-Finally, the space characters are blank areas on the map (no special behavior other than those specified above).
+1. Automaton-LG starts from the place indicated by the @ symbol on the map and heads SOUTH.
+2. Automaton-LG finishes his journey and dies when he reaches the suicide booth marked $.
+3. Obstacles that Automaton-LG may encounter are represented by # or X.
+4. When Automaton-LG encounters an obstacle, he changes direction using the following priorities: SOUTH, EAST, NORTH and WEST. So he first tries to go SOUTH, if he cannot, then he will go EAST, if he still cannot, then he will go NORTH, and finally if he still cannot, then he will go WEST.
+5. Along the way, Automaton-LG may come across path modifiers that will instantaneously make him change direction. The S modifier will make him turn SOUTH from then on, E, to the EAST, N to the NORTH and W to the WEST.
+6. The circuit inverters (I on map) produce a magnetic field which will reverse the direction priorities that Automaton-LG should choose when encountering an obstacle. Priorities will become WEST, NORTH, EAST, SOUTH. If Automaton-LG returns to an inverter I, then priorities are reset to their original state (SOUTH, EAST, NORTH, WEST).
+7. Automaton-LG can also find a few beers along his path (B on the map) that will give him strength and put him in “Breaker” mode. Breaker mode allows Automaton-LG to destroy and automatically pass through the obstacles represented by the character X (only the obstacles X). When an obstacle is destroyed, it remains so permanently and Automaton-LG maintains his course of direction. If Automaton-LG is in Breaker mode and passes over a beer again, then he immediately goes out of Breaker mode. The beers remain in place after Automaton-LG has passed.
+8. 2 teleporters T may be present in the city. If Automaton-LG passes over a teleporter, then he is automatically teleported to the position of the other teleporter and he retains his direction and Breaker mode properties.
+9. Finally, the space characters are blank areas on the map (no special behavior other than those specified above).
+
 Your program must display the sequence of moves taken by Automaton-LG according to the map provided as input.
 
 The map is divided into lines (L) and columns (C). The contours of the map are always unbreakable # obstacles. The map always has a starting point @ and a suicide booth $.
