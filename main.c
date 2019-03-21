@@ -82,11 +82,11 @@ int main()
 
         case 'X':
 
-            if(!breaker_mode)
+            if(!breaker_mode)//obstacles matter
             {
                 findCurrentDirection();
             }
-            else
+            else//obstacles destroyed
             {
                 moveInCurrentDirection(current_dir);
                 map[r][c] = ' ';//destroying the obstacle X if in breaker mode
@@ -278,7 +278,7 @@ void findCurrentDirection()
 
     case 0:
         //call setCurrentDirection  and pas what the current direction should be
-        if(breaker_mode == 0)
+        if(breaker_mode == 0)//two kinds of obstacles exist X and #
         {
             if((map[r+1][c] != 'X') && (map[r+1][c] != '#'))
             {
@@ -303,7 +303,7 @@ void findCurrentDirection()
                 strcpy(abort_program.msg,"\nLG-Automaton stuck with obstacles all around!!");
             }
         }
-        else
+        else//only # is an obstacle now
         {
             if(map[r+1][c] != '#')
             {
@@ -420,7 +420,6 @@ void updatePositionCoordinates()
     /*
     Automaton_pos.r = Tr;
     Automaton_pos.c = Tc;
-
     r = Tr;
     c = Tc;*/
 }
