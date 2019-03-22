@@ -150,7 +150,7 @@ int main()
         default:
             //printf("\n*****Unknown map element! Aborting process...!*****\n");
             abort_program.abortsignal = 1;
-            strcpy(abort_program.msg, "\n*****Unknown map element! Aborting process...!*****\n");
+            strcpy(abort_program.msg, "\nUnknown map element!Aborting process!\n");
         }
 
     }
@@ -314,7 +314,8 @@ void takeInput()
 
     for(i = 0; i < map_r; i++)
     {
-        fgets (map[i], (map_c+1), stdin);
+        scanf("%[^\n]%*c", map[i]);
+        //fgets (map[i], (map_c+1), stdin);
         //line[c] = '\0';
         fflush(stdin);
         //puts(map[i]);
