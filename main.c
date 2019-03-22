@@ -15,10 +15,10 @@ void enterBreakerMode();
 
 
 
-static int breaker_mode = 0;
+static int breaker_mode;
 static char **map;
 static char current_dir;// direction_prio[4] = {'S','E','N','W'};
-static int map_r, map_c,r, c, inverse_order = 0;//global row column iterator and order priority indicator
+static int map_r, map_c,r, c, inverse_order;//global row column iterator and order priority indicator
 static int infiniteLoop;// abort_program;
 
 /*	unified exception handling structure
@@ -194,6 +194,11 @@ void init()
     //init the error signal
     abort_program.abortsignal = 0;
 
+    //direction prio inversed
+    inverse_order = 0;
+
+    //breaker mode off
+    breaker_mode = 0;
     //maybe more init tasks would be required
 }
 
