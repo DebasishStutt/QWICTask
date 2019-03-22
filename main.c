@@ -206,10 +206,10 @@ void init()
 void takeInput()
 {
     int i,j,k;
-    char inputstring[8], r_str[4], c_str[4];
+    char inputstring[256], r_str[4], c_str[4];
     //char *line;
     printf("Please enter the number of rows(>=4 and <=100) and columns(>=4 and <=100) of the map separated by space...\n");
-    fgets(inputstring, 8, stdin);
+    fgets(inputstring, sizeof(inputstring), stdin);
     fflush(stdin);
 
     for(i =0; ; i++)
@@ -266,7 +266,8 @@ void takeInput()
     printf("So, rows = %d   and   columns = %d\n", map_r, map_c);
     if(((map_r < 4) || (map_r > 100)) || (map_c < 4) || (map_c > 100))
     {
-        printf("The valid constraints are:\n        4 <= row <= 100\n        4 <= col <= 100\n");
+        printf("The valid constraints are:\n        4 <= row <= 100\n        4 <= col <= 100\nProgram will exit.");
+        exit(1);
     }
 
 
