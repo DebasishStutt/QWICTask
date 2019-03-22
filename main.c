@@ -21,12 +21,6 @@ static char current_dir;// direction_prio[4] = {'S','E','N','W'};
 static int map_r, map_c,r, c, inverse_order = 0;//global row column iterator and order priority indicator
 static int infiniteLoop;// abort_program;
 
-/*struct currentPos
-{
-    int r, c;
-}Automaton_pos;
-*/
-
 /*	unified exception handling structure
 	All parts of the code that experiences
 	an exception/error writes the message
@@ -35,7 +29,7 @@ static int infiniteLoop;// abort_program;
 struct abortHandler
 {
     int abortsignal;
-    char msg[50];
+    char msg[50];//arbitrarily enough size
 }abort_program;
 
 int main()
@@ -44,8 +38,10 @@ int main()
 
     //printf("Hello world!\n");
 
+    // take map input
     takeInput();
 
+    //initialie some params to be used
     init();
 
 
@@ -53,12 +49,6 @@ int main()
     {
         infiniteLoop++;
         x = getNextCellValue(current_dir);
-        if(x == '$')
-        {
-            moveInCurrentDirection(current_dir);
-            printf("\n\nLG-Automaton is no more!!\n\n");
-            break;
-        }
 
         if(x == 1)
         {
@@ -68,7 +58,7 @@ int main()
 
         }
 
-        if(infiniteLoop == 50)//when the map is so set up that LG-Automaton never reaches $
+        if(infiniteLoop == 100)//when the map is so set up that LG-Automaton never reaches $
         {
             abort_program.abortsignal = 1;
             strcpy(abort_program.msg, "\nIn infinite loop!!! Extract the repeating pattern by observation.");
@@ -76,6 +66,11 @@ int main()
 
         switch(x)
         {
+        case '$':
+            abort_program.abortsignal = 1; //only case where this struct is used to convey a normal end to the program
+            strcpy(abort_program.msg,"\n\nAutomaton-LG is no more!!\n\n");
+            break;
+
         case ' ':
             moveInCurrentDirection(current_dir);
             break;
@@ -176,8 +171,7 @@ void init()
             {
                 r = i;//map_r;
                 c = j;//smap_c;
-                //Automaton_pos.r = r;
-                //Automaton_pos.c = c;
+
                 break;//so now r and c has the coordinates of @
             }
 
@@ -196,6 +190,8 @@ void init()
     //infinite loop counter
     infiniteLoop = 0;
 
+    //init the error signal
+    abort_program.abortsignal = 0;
 
     //maybe more init tasks would be required
 }
@@ -403,12 +399,8 @@ void updatePositionCoordinates()
         {
             if(((Tr != r) || (Tc != c)) && (map[Tr][Tc] == 'T'))
             {
-                //Automaton_pos.r = Tr;
-                //Automaton_pos.c = Tc;
-
                 r = Tr;
                 c = Tc;
-
                 break;
             }
         }
@@ -417,11 +409,7 @@ void updatePositionCoordinates()
             break;
         }
     }
-    /*
-    Automaton_pos.r = Tr;
-    Automaton_pos.c = Tc;
-    r = Tr;
-    c = Tc;*/
+
 }
 
 void moveInCurrentDirection(char direction)
@@ -431,29 +419,21 @@ void moveInCurrentDirection(char direction)
     case 'N':
         printf("\nNorth");
         r--;
-        //Automaton_pos.r = r;
-        //Automaton_pos.c = c;
         break;
 
     case 'S':
         r++;
         printf("\nSouth");
-        //Automaton_pos.r = r;
-        //Automaton_pos.c = c;
         break;
 
     case 'E':
         c++;
         printf("\nEast");
-        //Automaton_pos.r = r;
-        //Automaton_pos.c = c;
         break;
 
     case 'W':
         c--;
         printf("\nWest");
-        //Automaton_pos.r = r;
-        //Automaton_pos.c = c;
         break;
 
     default:
