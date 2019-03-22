@@ -10,9 +10,9 @@ void setCurrentDirection(char dir);
 void findCurrentDirection();
 void updatePositionCoordinates();
 void moveInCurrentDirection(char direction);
-void deleteMap();
+void deleteMemory();
 void enterBreakerMode();
-
+void printPath();
 
 
 static int breaker_mode;
@@ -31,6 +31,17 @@ struct abortHandler
     int abortsignal;
     char msg[50];//arbitrarily enough size
 }abort_program;
+
+/*linked list to store the path taken*/
+
+typedef struct pnode //stores the path traversed and if not infinite loop then print to console.
+{
+    char dir[5];
+    struct pnode *next;
+}pnode_t;
+
+pnode_t *head, *curr;
+
 
 int main()
 {
@@ -61,13 +72,19 @@ int main()
         if(infiniteLoop == 100)//when the map is so set up that LG-Automaton never reaches $
         {
             abort_program.abortsignal = 1;
-            strcpy(abort_program.msg, "\nIn infinite loop!!! Extract the repeating pattern by observation.");
+            strcpy(abort_program.msg, "LOOP");
         }
 
+        if(abort_program.abortsignal)//if somebody has requested an abort
+        {
+            printf("\n%s\n",abort_program.msg);
+            break;
+        }
         switch(x)
         {
         case '$':
             moveInCurrentDirection(current_dir);
+            printPath();
             abort_program.abortsignal = 1; //only case where this struct is used to convey a normal end to the program
             strcpy(abort_program.msg,"\n\nAutomaton-LG is no more!!\n\n");
             break;
@@ -122,12 +139,12 @@ int main()
         case 'T':
             moveInCurrentDirection(current_dir);
             updatePositionCoordinates();
-            printf(" :: Teleported!!");
+            //printf(" :: Teleported!!");
             break;
 
         case '@': //not a part of the specification but just for more info
             moveInCurrentDirection(current_dir);
-            printf(" :: LG-Automaton returned to its starting position!!");
+            //printf(" :: LG-Automaton returned to its starting position!!");
             break;
 
         default:
@@ -136,29 +153,32 @@ int main()
             strcpy(abort_program.msg, "\n*****Unknown map element! Aborting process...!*****\n");
         }
 
-        if(abort_program.abortsignal)//if somebody has requested an abort
-        {
-            printf("%s",abort_program.msg);
-            break;
-        }
     }
 
 
     //delete the map and free the memory
-    deleteMap();
+    deleteMemory();
     return 0;
 }
 
 
 
-void deleteMap()
+void deleteMemory()
 {
+    pnode_t *curr;
     int i;
     for(i =0; i < map_r; i++)
     {
         free(map[i]);
     }
     free(map);
+
+    while(head != NULL)
+    {
+        curr = head;
+        head = head->next;
+        free(curr);
+    }
 }
 void init()
 {
@@ -199,6 +219,17 @@ void init()
 
     //breaker mode off
     breaker_mode = 0;
+
+    //the path linked list
+    head = NULL;
+    //head = malloc(sizeof(node_t));
+    //if (head == NULL)
+    //{
+     //   return 1;
+    //}
+
+    //head->val = 1;
+    //head->next = NULL;
     //maybe more init tasks would be required
 }
 
@@ -478,26 +509,48 @@ void updatePositionCoordinates()
 
 void moveInCurrentDirection(char direction)
 {
+    pnode_t *temp;
+    if(head == NULL)
+    {
+        head = malloc(sizeof(pnode_t));
+        head->next = NULL;
+        curr = head;
+    }
+    else
+    {
+        while(curr ->next != NULL)
+        {
+            curr = curr->next;
+        }
+        temp = malloc(sizeof(pnode_t));
+        temp->next = NULL;
+        curr->next = temp;
+        curr = curr ->next;
+    }
     switch(direction)
     {
     case 'N':
-        printf("\nNorth");
+        //printf("\nNorth");
+        strcpy(curr->dir, "North");
         r--;
         break;
 
     case 'S':
         r++;
-        printf("\nSouth");
+        strcpy(curr->dir, "South");
+        //printf("\nSouth");
         break;
 
     case 'E':
         c++;
-        printf("\nEast");
+        strcpy(curr->dir, "East");
+        //printf("\nEast");
         break;
 
     case 'W':
         c--;
-        printf("\nWest");
+        strcpy(curr->dir, "West");
+        //printf("\nWest");
         break;
 
     default:
@@ -506,6 +559,17 @@ void moveInCurrentDirection(char direction)
     }
 }
 
+
+void printPath()
+{
+    pnode_t *curr = head;
+
+    while(curr != NULL)
+    {
+        printf("\n%s", curr->dir);
+        curr = curr->next;
+    }
+}
 void enterBreakerMode()
 {
     breaker_mode ^= 1;
