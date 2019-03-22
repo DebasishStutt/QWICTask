@@ -22,4 +22,4 @@ This readme tries to explain parts of the code that might not be obvious at the 
 
 4. For the case where Automaton-LG never reaches the $, I have considered 100 steps of Automaton-LG's movement before it says "LOOP".
 
-
+5. A linked list stores the steps taken. If $ is reached within a number of 99 steps then the sequence is displyed or else LOOP is displayed.
