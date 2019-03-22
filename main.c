@@ -67,6 +67,7 @@ int main()
         switch(x)
         {
         case '$':
+            moveInCurrentDirection(current_dir);
             abort_program.abortsignal = 1; //only case where this struct is used to convey a normal end to the program
             strcpy(abort_program.msg,"\n\nAutomaton-LG is no more!!\n\n");
             break;
