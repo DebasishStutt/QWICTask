@@ -205,14 +205,71 @@ void init()
 //input map
 void takeInput()
 {
-    int i;
+    int i,j,k;
+    char inputstring[8], r_str[4], c_str[4];
     //char *line;
-    printf("Please enter the number of rows and columns of the map in order...\n");
-    scanf("%d %d", &map_r, &map_c);
+    printf("Please enter the number of rows(>=4 and <=100) and columns(>=4 and <=100) of the map separated by space...\n");
+    fgets(inputstring, 8, stdin);
     fflush(stdin);
 
+    for(i =0; ; i++)
+    {
+        if(inputstring[i] != ' ')
+        {
+            r_str[i] = inputstring[i];
+        }
+        else if(inputstring[i] == ' ')
+        {
+            r_str[i] = '\0';
+            break;
+        }
+        else if(inputstring[i] == '\0')
+        {
+            printf("You didn't provide number of columns. Program will exit.\n");
+            exit(1);
+        }
+    }
+    if(i == 0)
+    {
+        printf("You didn't provide number of rows. Program will exit.\n");
+        exit(1);
+    }
+    else
+    {
+        map_r = atoi(r_str);
+    }
 
-    //printf("%d, %d\n", r,c);
+
+    for(k=0, j = i+1; ;j++)
+    {
+        if(inputstring[j] == '\0')
+        {
+            c_str[j] = '\0';
+            break;
+        }
+        else
+        {
+            c_str[k] = inputstring[j];
+            k++;
+        }
+    }
+    if(j == (i+1))
+    {
+        printf("You didn't provide number of columns. Program will exit.\n");
+        exit(1);
+    }
+    else
+    {
+        map_c = atoi(c_str);
+    }
+
+    printf("So, rows = %d   and   columns = %d\n", map_r, map_c);
+    if(((map_r < 4) || (map_r > 100)) || (map_c < 4) || (map_c > 100))
+    {
+        printf("The valid constraints are:\n        4 <= row <= 100\n        4 <= col <= 100\n");
+    }
+
+
     map = (char **)malloc(map_r * sizeof(char *));
     //sline = malloc((c+1) * sizeof(char));
 
